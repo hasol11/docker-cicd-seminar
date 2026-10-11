@@ -47,6 +47,15 @@ def test_database_response(monkeypatch):
     assert response.json() == {"database": "ok", "value": 1}
     cursor.execute.assert_called_once_with("SELECT 1")
 
+def test_version():
+    response = client.get("/version")
+
+    assert response.status_code == 200
+    assert response.json() == {
+        "version": "v2",
+        "author": "강지윤"
+    }
+
 
 @pytest.mark.skipif(
     not os.getenv("DATABASE_URL"),
